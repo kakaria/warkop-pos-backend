@@ -25,7 +25,7 @@ class ProductViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     
     # tentuin kolom yang mau dicari  (pake list of string)
-    search_fields = ['name', 'description']
+    search_fields = ['name']
     
     
 class OrderViewSet(viewsets.ModelViewSet):
