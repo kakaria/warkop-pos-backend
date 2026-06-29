@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 from rest_framework.permissions import IsAuthenticated
 from .models import Category, Product, Order
 from .serializers import CategorySerializer, ProductSerializer, OrderSerializer
@@ -20,6 +20,12 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     
     permission_classes = [IsAuthenticated]
+    
+    # pasang mesin pencari di dalam list
+    filter_backends = [filters.SearchFilter]
+    
+    # tentuin kolom yang mau dicari  (pake list of string)
+    search_fields = ['name', 'description']
     
     
 class OrderViewSet(viewsets.ModelViewSet):
