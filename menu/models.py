@@ -25,8 +25,11 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     total_price = models.IntegerField(default=0)
     
+    # tambahin field baru (buat nambahin status belom bayar)
+    status = models.CharField(max_length=20, default='PENDING')
+    
     def __str__(self):
-        return f"Order has been created at #{self.created_at.strftime('%Y-%m-%d %H:%M')}"
+        return f"Order has been created at #{self.created_at.strftime('%Y-%m-%d %H:%M'): {self.status}}"
     
     
 class OrderItem(models.Model):

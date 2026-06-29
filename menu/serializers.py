@@ -26,9 +26,9 @@ class OrderSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Order
-        fields = ['id', 'created_at', 'total_price', 'items']
+        fields = ['id', 'created_at', 'total_price', 'status', 'items']
         # 2. total_price kita kunci, biar  frontend gak bisa ngirim harga manual
-        read_only_fields =  ['total_price']
+        read_only_fields =  ['total_price', 'status']
         
     @transaction.atomic
     def create(self, validated_data):
