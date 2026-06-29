@@ -1,10 +1,12 @@
 from rest_framework import viewsets, filters, status # buat code (HTTP)
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.decorators import action
-from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Category, Product, Order
 from .serializers import CategorySerializer, ProductSerializer, OrderSerializer
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from .services import payment
+
 
 class CategoryViewSet(viewsets.ModelViewSet):
     # 1. tentuin datanya (ngambil data dari mana)
@@ -42,20 +44,13 @@ class OrderViewSet(viewsets.ModelViewSet):
     
     @action(detail=True, methods=['post'])
     def pay(self, request, pk=None):
-        # 1. ambil data nota spesifik berdasarkan id (pk) yang dikasih user
         order = self.get_object()
         
-        # 2. logika bisnis (cegah bayar 2 kali)
-        if order.status == 'PAID':
-            return Response(
-                {'error': f'Bos! order dengan id {order.id} ini udah dibayar loh!'},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        order.status = 'PAID'      
-        order.save()
+        # jalanin function si ngecek apakah sudah bayar
+        payment(order)
         
         return Response(
-            {'message': f'sukses! Nota nomor {order.id} berhasil dibayar'},
+            {"message": "Payment success bro!"},
             status=status.HTTP_200_OK
         )
     
