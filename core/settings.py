@@ -152,3 +152,10 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }
+
+# CELERY & REDIS SETTINGS
+CELERY_BROKER_URL = 'rediss://default:gQAAAAAAAcOmAAIgcDEyYmVkMGNkZTUxZmU0ZTJlYjgyMzJiNjUyN2NkODI0MA@calm-sculpin-115622.upstash.io:6379'
+
+# settingan format yang bakal dikirim ke papan (wajib JSON)
+CELERY_ACCEPT_TOKEN = ['json']
+CELERY_TASK_SERIALIZER = 'json'
